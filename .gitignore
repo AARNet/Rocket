@@ -1,0 +1,10 @@
+server/docker/mdpush
+clients/windows/mdpush/.vs
+clients/windows/mdpush/mdpush/bin/*
+clients/windows/mdpush/mdpush/obj/*
+clients/windows/mdpush\ *
+clients/windows/mdpush/bin
+clients/windows/mdpush/mdpushSetup/Release
+clients/windows/mdpush/mdpushSetup/Debug
+clients/windows/mdpush/mdpushWorker/bin/*
+clients/windows/mdpush/mdpushWorker/obj/*

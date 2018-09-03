@@ -1,0 +1,16 @@
+{
+        "owncloud":"https://url to owncloud/",
+        "owncloudWebdav":"https://url to owncloud/remote.php/webdav/",
+        "cache":"session",
+        "eosurl":"url to eos (eos hostname)",
+        "owncloudRoot":"/eos/location of user data/",
+        "ownclouddbname":"",
+        "ownclouddbuser":"",
+        "ownclouddbpassword":"",
+        "ownclouddbhost":"127.0.0.1",
+        "ownclouddbport":"6033",
+        "owncloudapiuser":"",
+        "owncloudapipass":"",
+        "syslogIdent":"cloudstor-rocket",
+        "clientversion":"v1.2.4"
+}

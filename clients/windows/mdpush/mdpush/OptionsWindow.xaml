@@ -1,0 +1,107 @@
+﻿<!--
+BSD 3-Clause License
+
+Copyright(c) 2018, AARNet
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+* Redistributions of source code must retain the above copyright notice, this
+  list of conditions and the following disclaimer.
+
+* Redistributions in binary form must reproduce the above copyright notice,
+  this list of conditions and the following disclaimer in the documentation
+  and/or other materials provided with the distribution.
+
+* Neither the name of the copyright holder nor the names of its
+  contributors may be used to endorse or promote products derived from
+  this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED.IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+    
+<Window x:Class="mdpush.OptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:mdpush"
+        mc:Ignorable="d"
+        Title="Options" Height="600" Width="700">
+    <Grid Margin="4,0,0,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle x:Name="SettingsPanel" Fill="Lime" Opacity="0" Margin="-4,0" Grid.RowSpan="2"/>
+
+        <Label Content="Upload Settings" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Margin="-4,0,0,0"/>
+
+        <Label Content="Upload Chunk Size" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Label x:Name="labelChunkSize" Content="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right"/>
+        <Slider x:Name="sliderChunkSize" Grid.Row="1" VerticalAlignment="Top" Margin="0,28,0,0" Minimum="0" Maximum="11" ValueChanged="SliderChunkSize_ValueChanged" IsSnapToTickEnabled="True"/>
+
+        <Label Content="Parallel Uploads" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,60,0,0"/>
+        <Label x:Name="labelParallel" Content="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,60,0,0"/>
+        <Slider x:Name="sliderParallel" Grid.Row="1" VerticalAlignment="Top" Margin="0,88,0,0" Minimum="1" Maximum="24" ValueChanged="SliderParallel_ValueChanged" IsSnapToTickEnabled="True"/>
+
+        <Label Content="Data Buffer" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,120,0,0"/>
+        <Label x:Name="labelDataQueue" Content="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,120,0,0"/>
+        <Slider x:Name="sliderDataQueue" Grid.Row="1" VerticalAlignment="Top" Margin="0,148,0,0" Minimum="1" Maximum="12" ValueChanged="SliderDataQueue_ValueChanged" IsSnapToTickEnabled="True"/>
+
+        <Label Content="Max Files Per Chunk" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,180,0,0"/>
+        <Label x:Name="labelMaxFilesPerChunk" Content="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,180,0,0"/>
+        <Slider x:Name="sliderMaxFilesPerChunk" Grid.Row="1" VerticalAlignment="Top" Margin="0,208,0,0" Minimum="1" Maximum="20" ValueChanged="SliderMaxFilesPerChunk_ValueChanged" IsSnapToTickEnabled="True"/>
+
+        <Label Content="Failed Upload Retries" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,240,0,0"/>
+        <Label x:Name="labelMaxRetries" Content="0" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,240,0,0"/>
+        <Slider x:Name="sliderMaxRetries" Grid.Row="1" VerticalAlignment="Top" Margin="0,268,0,0" Minimum="0" Maximum="10" ValueChanged="SliderMaxRetries_ValueChanged" IsSnapToTickEnabled="True"/>
+
+        <CheckBox x:Name="checksums" Content="Compare Checksums" HorizontalAlignment="Left" Margin="0,310,0,0" Grid.Row="1" VerticalAlignment="Top" />
+
+        <Label Content="Proxy Settings" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,338,0,0"/>
+        <ComboBox x:Name="proxy" Margin="4,364,4,0" Grid.Row="1" VerticalAlignment="Top" IsReadOnly="True" SelectionChanged="proxy_SelectionChanged">
+            <ComboBoxItem IsSelected="True">System Settings</ComboBoxItem>
+            <ComboBoxItem>No Proxy</ComboBoxItem>
+            <ComboBoxItem>Custom Proxy</ComboBoxItem>
+        </ComboBox>
+        <Label Content="Host" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,386,0,0"/>
+        <TextBox x:Name="proxyHost"  Grid.Row="1" VerticalAlignment="Top" Text="" Margin="40,390,4,0" />
+        <Label Content="Port" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,406,0,0"/>
+        <TextBox x:Name="proxyPort"  Grid.Row="1" VerticalAlignment="Top" Text="" Margin="40,410,4,0" PreviewTextInput="proxyPort_PreviewTextInput" DataObject.Pasting="proxyPort_PastingHandler" />
+
+        <Button x:Name="SaveButton" Template="{StaticResource CSButton}" Content="Save Settings" VerticalAlignment="Top" Height="30" FontSize="14" Foreground="White" Click="SaveButton_Click" Grid.Row="1" Margin="2,480,2,0" />
+
+        <Label Content="Upload Chunk&#10;Test Sizes" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="8,0,0,0"/>
+        <Button x:Name="TestButton" Template="{StaticResource CSButton}" Content="Run Tests" HorizontalAlignment="Right" VerticalAlignment="Center" Width="90" Height="30" FontSize="14" Foreground="White" Click="TestButton_Click" Grid.Column="1" Margin="0,0,4,0"  />
+        <CheckBox x:Name="checkBox_100k" Content="100 KB" HorizontalAlignment="Left" Margin="99,2,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_500k" Content="500 KB" HorizontalAlignment="Left" Margin="161,2,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_1m" Content="1 MB" HorizontalAlignment="Left" Margin="225,2,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_10m" Content="10 MB" HorizontalAlignment="Left" Margin="286,2,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_20m" Content="20 MB" HorizontalAlignment="Left" Margin="99,18,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_50m" Content="50 MB" HorizontalAlignment="Left" Margin="161,18,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_80m" Content="80 MB" HorizontalAlignment="Left" Margin="225,18,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_100m" Content="100 MB" HorizontalAlignment="Left" Margin="286,19,0,0" VerticalAlignment="Top" IsChecked="True" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_200m" Content="200 MB" HorizontalAlignment="Left" Margin="99,34,0,0" VerticalAlignment="Top" IsChecked="False" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_500m" Content="500 MB" HorizontalAlignment="Left" Margin="161,34,0,0" VerticalAlignment="Top" IsChecked="False" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_1g" Content="1 GB" HorizontalAlignment="Left" Margin="225,34,0,0" VerticalAlignment="Top" IsChecked="False" Grid.Column="1"/>
+        <CheckBox x:Name="checkBox_15g" Content="1.5 GB" HorizontalAlignment="Left" Margin="286,34,0,0" VerticalAlignment="Top" IsChecked="False" Grid.Column="1"/>
+
+        <TextBox x:Name="log" TextWrapping="Wrap" VerticalScrollBarVisibility="Visible" Background="#FFF7F7F7" Grid.Row="1" Grid.Column="1" Margin="4,0,0,0" />
+    </Grid>
+</Window>
